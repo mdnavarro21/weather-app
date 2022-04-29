@@ -22,6 +22,7 @@
   "homepage": "https://github.com/mdnavarro21/weather-app#readme",
   "devDependencies": {
     "@babel/core": "^7.17.10",
+    "@babel/plugin-transform-runtime": "^7.17.10",
     "@babel/preset-env": "^7.17.10",
     "babel-loader": "^8.2.5",
     "eslint": "^8.14.0",
@@ -32,6 +33,7 @@
     "webpack-dev-server": "^4.8.1"
   },
   "dependencies": {
+    "@babel/runtime": "^7.17.9",
     "css-loader": "^6.7.1",
     "style-loader": "^3.3.1"
   }

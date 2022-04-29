@@ -1,0 +1,27 @@
+body {
+    position: relative;
+}
+
+#interval-forecast-container {
+    position:absolute;
+    left: 5%;
+
+    display:flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+
+    width: 90%;
+    height: auto;
+}
+
+.forecast-container {
+    border-style: solid;
+
+    padding: 10px;
+    height: 200px;
+    width: 120px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
