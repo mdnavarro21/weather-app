@@ -1,5 +1,6 @@
 body {
     position: relative;
+    background-color: lightblue;
 }
 
 #interval-forecast-container {
@@ -18,8 +19,8 @@ body {
     border-style: solid;
 
     padding: 10px;
-    height: 200px;
-    width: 120px;
+    min-height: 200px;
+    width: 250px;
 
     display: flex;
     flex-direction: column;
