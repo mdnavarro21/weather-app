@@ -3,6 +3,11 @@ body {
     background-color: lightblue;
 }
 
+header {
+    text-align: center;
+    font-family: 'Roboto';
+    font-size: 4vh;
+}
 #interval-forecast-container {
     position:absolute;
     left: 5%;
@@ -19,10 +24,16 @@ body {
     border-style: solid;
 
     padding: 10px;
+    margin-top: 10px;
     min-height: 200px;
     width: 250px;
 
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
+}
+
+.time {
+    text-align: center;
+    font-size: 4vh;
 }
