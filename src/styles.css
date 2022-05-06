@@ -1,39 +1,96 @@
 body {
     position: relative;
-    background-color: lightblue;
+    background-color: black;
+    color: white;
+    font-family: 'Open Sans';
 }
 
+form {
+    position: absolute;
+    right: 0;
+}
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    width: 100%;
+    height: 100vh;
+}
 header {
-    text-align: center;
-    font-family: 'Roboto';
-    font-size: 4vh;
-}
-#interval-forecast-container {
-    position:absolute;
-    left: 5%;
+    font-size: 2vh;
+    height: 15%;
+    width: 100%;
 
+    margin-left: 50px;
+}
+
+img {
+    border-radius: 35px 35px 0 0;
+    width: 100%;
+    max-height:100%;
+}
+
+#interval-forecast-container {
     display:flex;
-    justify-content: space-evenly;
+    justify-content: space-around;
     flex-wrap: wrap;
 
-    width: 90%;
-    height: auto;
+    width: 100%;
+    height: 85%;
 }
 
 .forecast-container {
-    border-style: solid;
+    border-radius: 40px;
 
-    padding: 10px;
-    margin-top: 10px;
-    min-height: 200px;
-    width: 250px;
+    width: 300px;
+    height: 48%;
+
+    background-color: rgb(0, 85, 114);
+    color: lightyellow;
 
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+
 }
 
-.time {
-    text-align: center;
-    font-size: 4vh;
+.forecast-info {
+    height: 60%;
+
+    margin-left: 15px;
+    margin-top: 10px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
 }
+
+.forecast-info > h1,.forecast-info > h2 {
+    height: 20%;
+    margin: 0;
+}
+
+.forecast-info > div {
+    height: 50%;
+    width: 100%;
+}
+
+.forecast-info > h1 {
+    font-size: 3vh;
+}
+
+.forecast-info > h2 {
+    font-size: 3.5vh;
+}
+
+.forecast-info div > h3 {
+    font-size: 2vh;
+    margin: 0;
+}
+
+.gif-container {
+    border-radius: 30px;
+    height: 40%;
+}
+

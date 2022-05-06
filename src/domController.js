@@ -1,55 +1,71 @@
 import { format } from 'date-fns';
-import { getData, getWeatherGifs } from './apiCalls';
+import apiController from './apiController';
 
-function clearChildNodes(node) {
-  while (node.firstChild) {
-    node.removeChild(node.lastChild);
-  }
-}
+const domController = (() => {
+  const clearChildNodes = (node) => {
+    while (node.firstChild) {
+      node.removeChild(node.lastChild);
+    }
+  };
 
-function renderHeader(data) {
-  const header = document.querySelector('header');
-  clearChildNodes(header);
-  const location = document.createElement('div');
-  const date = document.createElement('div');
+  const renderHeader = (data) => {
+    const header = document.querySelector('header');
+    clearChildNodes(header);
+    const location = document.createElement('h2');
+    const date = document.createElement('h3');
 
-  location.textContent = `${data.city.name}, ${data.city.country}`;
-  header.append(location);
+    location.textContent = `Next 24-Hour forecast of ${data.city.name}, ${data.city.country}`;
+    header.append(location);
 
-  const currentDate = data.list[0].dt_txt.slice(0, 11);
-  date.textContent = `${format(new Date(currentDate), 'EEEE LLLL do, yyyy')}`;
-  header.append(date);
-}
+    const currentDate = data.list[0].dt_txt;
+    date.textContent = `Starting on ${format(new Date(currentDate), 'EEEE LLLL do, yyyy')}`;
+    header.append(date);
+  };
 
-function createForecastCard(forecastData, units, weatherGif) {
-  let degrees = '';
-  if (units === 'imperial') {
-    degrees += '&#8457';
-  } else {
-    degrees += '&#8451';
-  }
-  const div = document.createElement('div');
-  div.classList.add('forecast-container');
-  div.innerHTML = `
-    <div class = 'time'>${forecastData.dt_txt.slice(11, forecastData.dt_txt.length)}</div>
-    <div>Temperature: ${forecastData.main.temp} ${degrees}</div>
-    <div>Feels Like: ${forecastData.main.feels_like} ${degrees}</div>
-    <div>Humidity: ${forecastData.main.humidity}</div>
-    <div>Skies: ${forecastData.weather[0].description}`;
-  const gif = document.createElement('img');
-  gif.src = weatherGif.data.images.original.url;
-  div.append(gif);
-  return div;
-}
-async function displayThreeHourForecast(location, units) {
-  const container = document.getElementById('interval-forecast-container');
-  const data = await getData(location, units);
-  const forecast24Hr = data.list.slice(0, 8);
-  const weatherGifs = await getWeatherGifs(forecast24Hr);
-  renderHeader(data);
-  for (let i = 0; i < forecast24Hr.length; i += 1) {
-    container.append(createForecastCard(forecast24Hr[i], units, weatherGifs[i]));
-  }
-}
+  const createForecastCard = (forecastData, units, weatherGif) => {
+    let degrees = '';
+    if (units === 'imperial') {
+      degrees += '&#8457';
+    } else {
+      degrees += '&#8451';
+    }
+    const div = document.createElement('div');
+    div.classList.add('forecast-container');
 
-export { displayThreeHourForecast, clearChildNodes };
+    const gifContainer = document.createElement('div');
+    gifContainer.classList.add('gif-container');
+    const gif = document.createElement('img');
+    gif.src = weatherGif.data.images.fixed_height_small.url;
+    gifContainer.append(gif);
+    div.append(gifContainer);
+
+    div.innerHTML += `<div class = 'forecast-info'>
+        <h1 class = 'time'>${format(new Date(forecastData.dt_txt), 'h:mm a')}</h1>
+        <h2>Temperature: ${forecastData.main.temp} ${degrees}</h2>
+        <div>
+          <h3>Feels Like: ${forecastData.main.feels_like} ${degrees}</h3>
+          <h3>Sky Conditions: ${forecastData.weather[0].description}</h3>
+          <h3>Humidity: ${forecastData.main.humidity}</h3>        
+        </div>
+      </div>`;
+    return div;
+  };
+
+  const displayThreeHourForecast = async (location, units) => {
+    const container = document.getElementById('interval-forecast-container');
+    if (container.hasChildNodes()) {
+      clearChildNodes(container);
+    }
+    const data = await apiController.getData(location, units);
+    const forecast24Hr = data.list.slice(0, 8);
+    const weatherGifs = await apiController.getWeatherGifs(forecast24Hr);
+    renderHeader(data);
+    for (let i = 0; i < forecast24Hr.length; i += 1) {
+      container.append(createForecastCard(forecast24Hr[i], units, weatherGifs[i]));
+    }
+  };
+
+  return { displayThreeHourForecast };
+})();
+
+export default domController;
