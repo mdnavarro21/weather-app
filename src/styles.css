@@ -6,8 +6,7 @@ body {
 }
 
 form {
-    position: absolute;
-    right: 0;
+    position: relative;
 }
 main {
     display: flex;

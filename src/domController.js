@@ -51,21 +51,25 @@ const domController = (() => {
     return div;
   };
 
-  const displayThreeHourForecast = async (location, units) => {
-    const container = document.getElementById('interval-forecast-container');
-    if (container.hasChildNodes()) {
-      clearChildNodes(container);
-    }
-    const data = await apiController.getData(location, units);
-    const forecast24Hr = data.list.slice(0, 8);
-    const weatherGifs = await apiController.getWeatherGifs(forecast24Hr);
-    renderHeader(data);
-    for (let i = 0; i < forecast24Hr.length; i += 1) {
-      container.append(createForecastCard(forecast24Hr[i], units, weatherGifs[i]));
+  const displayForecast = async (location, units) => {
+    try {
+      const container = document.getElementById('interval-forecast-container');
+      if (container.hasChildNodes()) {
+        clearChildNodes(container);
+      }
+      const data = await apiController.getData(location, units);
+      const forecast24Hr = data.list.slice(0, 8);
+      const weatherGifs = await apiController.getWeatherGifs(forecast24Hr);
+      renderHeader(data);
+      for (let i = 0; i < forecast24Hr.length; i += 1) {
+        container.append(createForecastCard(forecast24Hr[i], units, weatherGifs[i]));
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
-  return { displayThreeHourForecast };
+  return { displayForecast };
 })();
 
 export default domController;
